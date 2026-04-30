@@ -3,81 +3,187 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Media Race: Hunt. Snap. Win!</title>
+  <title>Dependency Injection Lab - Student Timetable</title>
   <style>
-    body { font-family: 'Arial', sans-serif; margin: 0; padding: 0; line-height: 1.6; background: #fff; color: #222; }
-    header { background: #8B0000; color: #fff; padding: 30px 0; text-align: center; }
-    nav { background: #d46a6a; padding: 12px; text-align: center; }
-    nav a { margin: 0 20px; color: #fff; text-decoration: none; font-weight: bold; }
-    section { padding: 30px 20px; max-width: 1000px; margin: auto; }
-    h2 { border-bottom: 2px solid #8B0000; padding-bottom: 5px; color: #8B0000; }
-    footer { background: #f4cccc; padding: 15px; text-align: center; font-size: 0.9em; color: #000; }
-    img { max-width: 100%; height: auto; margin-top: 10px; margin-bottom: 20px; border: 2px solid #8B0000; }
+    :root {
+      --primary: #1f4b99;
+      --secondary: #edf3ff;
+      --text: #1d2433;
+      --muted: #5d6472;
+      --code-bg: #0d1117;
+    }
+    body { font-family: Arial, sans-serif; margin: 0; color: var(--text); background: #fff; line-height: 1.6; }
+    header { background: var(--primary); color: #fff; padding: 2rem 1rem; }
+    main { max-width: 980px; margin: 0 auto; padding: 1.5rem; }
+    section { margin-bottom: 2rem; }
+    h1, h2, h3 { margin-top: 0; }
+    h2 { border-bottom: 2px solid var(--primary); padding-bottom: .4rem; }
+    .card { background: var(--secondary); border-left: 5px solid var(--primary); padding: 1rem; border-radius: 8px; }
+    ul { padding-left: 1.2rem; }
+    pre { background: var(--code-bg); color: #d1e7ff; padding: 1rem; overflow-x: auto; border-radius: 8px; }
+    code { font-family: "Fira Code", Consolas, monospace; }
+    .muted { color: var(--muted); }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    th, td { border: 1px solid #ccd7ef; padding: .6rem; text-align: left; }
+    th { background: #dfe9ff; }
+    footer { background: #f5f8ff; color: var(--muted); text-align: center; padding: 1rem; }
   </style>
 </head>
 <body>
   <header>
-    <h1>The Media Race: Hunt. Snap. Win!</h1>
-    <p>A Dynamic Digital Engagement Program by UTM Students</p>
+    <h1>Lab: Dependency Injection in Flutter</h1>
+    <p>Case Study: Display Today's Timetable for a Student</p>
   </header>
 
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#task">My Role</a>
-    <a href="#challenges">Challenges</a>
-    <a href="#problems">Event Issues</a>
-    <a href="#results">Results</a>
-    <a href="#reflection">Reflection</a>
-  </nav>
+  <main>
+    <section>
+      <h2>Objective</h2>
+      <ul>
+        <li>Understand how Dependency Injection (DI) works.</li>
+        <li>Implement 4 types of DI.</li>
+        <li>Compare which DI approach is better for specific scenarios.</li>
+      </ul>
+    </section>
 
-  <section id="home">
-    <h2>Event Overview</h2>
-    <p><strong>Date:</strong> 31 May 2025 | <strong>Time:</strong> 8:30 AM – 5:00 PM | <strong>Location:</strong> Kolej Siswa Jaya, UTM Kuala Lumpur</p>
-    <p>Organized under the Digital Media and Community course (UKQF2012), this event was a student-led initiative involving two major activities: a photography showcase titled "Through My Lens" and a mission-based QR Treasure Hunt. The program aimed to foster creativity, teamwork, and real-world digital skills.</p>
-    <img src="DSC_0014.JPG" alt="Event Overview Poster">
-  </section>
+    <section>
+      <h2>Case Study</h2>
+      <p>Build a simple feature: <strong>"Display today's timetable for a student"</strong>.</p>
+      <div class="card">
+        <h3>Common Setup</h3>
+        <pre><code>class TimetableService {
+  List&lt;String&gt; getTodaySchedule() {
+    return [
+      "8:00 AM - Data Structures",
+      "10:00 AM - Software Engineering",
+      "2:00 PM - Mobile Programming"
+    ];
+  }
+}</code></pre>
+      </div>
+    </section>
 
-  <section id="task">
-    <h2>My Role</h2>
-    <p>I was responsible for Checkpoint 4 in the QR Treasure Hunt. My tasks included designing a photo-mission challenge, creating a Google Form for submission, generating and printing a QR code, and guiding participants through the checkpoint. I also calculated scores and submitted results to the team leader.</p>
-    <img src="DSC_0059.JPG" alt="Checkpoint Setup">
-  </section>
+    <section>
+      <h2>Task 1: Global DI</h2>
+      <pre><code>// Global instance
+final timetableService = TimetableService();
 
-  <section id="challenges">
-    <h2>Challenges and How I Solved Them</h2>
-    <ul>
-      <li><strong>ADHD and task pressure:</strong> I managed this by breaking tasks into smaller steps and staying organized.</li>
-      <li><strong>Introversion:</strong> I pushed myself to engage directly with participants and team members.</li>
-      <li><strong>Language barriers:</strong> I used clear, simple written communication and visual aids.</li>
-      <li><strong>Unexpected participant changes:</strong> I worked with my team to adjust the flow and sequence on the spot.</li>
-      <li><strong>Participant recruitment:</strong> I helped roam KSJ and invited more students to join the event in person.</li>
-    </ul>
-    <img src="DSC_0110.JPG" alt="Team Collaboration and Discussion">
-  </section>
+class TimetableController {
+  List&lt;String&gt; getSchedule() {
+    return timetableService.getTodaySchedule();
+  }
+}</code></pre>
+    </section>
 
-  <section id="problems">
-    <h2>Event-Wide Problems and Solutions</h2>
-    <ul>
-      <li><strong>Low initial turnout:</strong> Solved by inviting students on-site at KSJ.</li>
-      <li><strong>Group imbalance:</strong> Solved by restructuring groups and adjusting activity flow.</li>
-      <li><strong>Communication issues:</strong> Solved through visual tools, group chats, and confirmation checks.</li>
-    </ul>
-    <img src="DSC_0271.JPG" alt="Problem-solving during event">
-  </section>
+    <section>
+      <h2>Task 2: Constructor DI</h2>
+      <pre><code>class TimetableController {
+  final TimetableService service;
 
-  <section id="results">
-    <h2>Results</h2>
-    <p>I received submissions from 6 groups (2–4 participants each) at my checkpoint. The checkpoint ran smoothly, and the event met its goals with successful participation and positive feedback. Adjustments on the event day were well managed by the team.</p>
-    <img src="DSC_0378.JPG" alt="Results and Prize Giving">
-  </section>
+  TimetableController(this.service);
 
-  <section id="reflection">
-    <h2>Reflection</h2>
-    <p>This experience taught me how to organize and execute an activity under pressure, communicate confidently despite being introverted, and manage responsibilities despite having ADHD. I learned teamwork, problem-solving, and how to adapt to real-world challenges in a diverse team environment.</p>
-  </section>
+  List&lt;String&gt; getSchedule() {
+    return service.getTodaySchedule();
+  }
+}
+
+// Usage
+final controller = TimetableController(TimetableService());</code></pre>
+    </section>
+
+    <section>
+      <h2>Task 3: InheritedWidget DI</h2>
+      <pre><code>class TimetableProvider extends InheritedWidget {
+  final TimetableService service;
+
+  const TimetableProvider({
+    super.key,
+    required this.service,
+    required super.child,
+  });
+
+  static TimetableProvider of(BuildContext context) {
+    final provider =
+      context.dependOnInheritedWidgetOfExactType&lt;TimetableProvider&gt;();
+    assert(provider != null, 'No TimetableProvider found in context');
+    return provider!;
+  }
+
+  @override
+  bool updateShouldNotify(TimetableProvider oldWidget) =>
+      service != oldWidget.service;
+}
+
+// Access from widget tree
+final service = TimetableProvider.of(context).service;</code></pre>
+    </section>
+
+    <section>
+      <h2>Task 4: Service Locator (GetIt)</h2>
+      <pre><code>final getIt = GetIt.instance;
+
+void setup() {
+  getIt.registerLazySingleton&lt;TimetableService&gt;(
+    () =&gt; TimetableService(),
+  );
+}
+
+class TimetableController {
+  final TimetableService service = getIt&lt;TimetableService&gt;();
+
+  List&lt;String&gt; getSchedule() {
+    return service.getTodaySchedule();
+  }
+}</code></pre>
+    </section>
+
+    <section>
+      <h2>Comparison of DI Approaches</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Approach</th>
+            <th>Pros</th>
+            <th>Cons</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Global DI</td>
+            <td>Simple and fast setup</td>
+            <td>Tight coupling, hard to test</td>
+          </tr>
+          <tr>
+            <td>Constructor DI</td>
+            <td>Best for testing and modular code</td>
+            <td>More boilerplate in large projects</td>
+          </tr>
+          <tr>
+            <td>InheritedWidget DI</td>
+            <td>Good integration with Flutter widget tree</td>
+            <td>Can become verbose for complex dependency graphs</td>
+          </tr>
+          <tr>
+            <td>Service Locator (GetIt)</td>
+            <td>Clean usage and scalable registration</td>
+            <td>Dependencies become less explicit</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="muted"><strong>Recommended default:</strong> Constructor DI for core business logic, optionally combined with GetIt for app-wide composition.</p>
+    </section>
+
+    <section>
+      <h2>Lab Exercise: University Course Registration System</h2>
+      <ul>
+        <li>Design a wireframe UI for a university course registration system.</li>
+        <li>Apply DI in structuring backend logic (UI, service, and data layer).</li>
+        <li>Explain how your DI choice improves testability and maintainability.</li>
+      </ul>
+    </section>
+  </main>
 
   <footer>
-    <p>Contact: zinatferdous@graduate.utm.my</p>
+    Dependency Injection Lab Sheet &middot; Media Creativity and Innovation Day
   </footer>
 </body>
 </html>
